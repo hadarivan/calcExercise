@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>get data page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<style>
+    .result {
+        font-size: 20px;
+        color:black;
+    }
+    .square {
+        text-align: center;
+        padding: 10px;
+        width:200px;
+        height: 200px;
+        background: #008cba;
+    }
+</style>
+
+<body>
+<section class="square">
+    <h3>Calculator</h3>
+    <button id="Get" class="btn btn-info">Get</button>
+    <button id="Post" class="btn btn-info">Post</button>
+    <button id="Put" class="btn btn-info">Put</button><br><br>
+    <section class="result">Result: </section>
+</section>
+<script>
+    $("#Get").click((function () {
+        // GET:
+        // console.log("GetFunc");
+        $.get("http://shenkar.html5-book.co.il/2018-2019/dcs/dev_16/service_calculator/index.php/",
+            {func:"sum",num1:10,num2:15,num3:20},
+            function ( data ) {
+                //console.log("success");
+                $(".result").append(data.retVal);
+                console.log( "Return data: " + data.retVal);
+            });
+    }));
+    $("#Post").click((function () {
+        // POST:
+        $.post("http://shenkar.html5-book.co.il/2018-2019/dcs/dev_16/service_calculator/index.php/",
+            {func:"multi",num1:10,num2:15,num3:20,num4:1},
+            function( data ) {
+                $(".result").append(data.retVal);
+                console.log( "Return data: " + data.retVal);
+            });
+    }));
+    $("#Put").click((function () {
+        var dataObj = {'func':'sum', 'num1':1, 'num2':2, 'num3':3, 'num4':4};
+        $.ajax({
+            url:"http://shenkar.html5-book.co.il/2018-2019/dcs/dev_16/service_calculator/index.php/",
+            data:dataObj,
+            type:'PUT',
+            success: function (data) {
+                $(".result").append(data.retVal);
+                console.log("Return data: "+data.retVal);
+            }
+        })
+    }));
+</script>
+</body>
+</html>
